@@ -1,0 +1,27 @@
+{
+    "name": "wasm_project_template",
+    "version": "1.0.0",
+    "description": "create new WASM project",
+    "dependencies": {
+        "express": "^4.17.1",
+        "nodemon": "^2.0.12"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "start": "node server.js",
+        "dev": "./scripts/compile.sh && npm start",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "nodemonConfig": {
+        "ignore": "bin",
+        "watch": [
+            ".",
+            "app.html",
+            "src/lib.cpp",
+            "src/main.cpp",
+            "scripts/compile.sh"
+        ]
+    },
+    "author": "Clark Walker (heartbeast)",
+    "license": "GPL-3.0"
+}
