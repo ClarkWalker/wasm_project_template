@@ -3,8 +3,8 @@ console.log("\n\n\n\n\n\n");
 const exec = require("child_process").exec;
 const filewatcher = require('filewatcher');
 
-const MAIN_CPP          = "./src/main.cpp";
-const LIB_CPP           = "./src/lib.cpp";
+const MAIN_CPP   = "./src/main.cpp";
+const LIB_CPP    = "./src/lib.cpp";
 
 const MAIN_OUT   = "./bin/main_target.out";
 const LIB_JS     = "./bin/lib_target.js";
