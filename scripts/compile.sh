@@ -2,7 +2,6 @@
 
 #########
 # g++ -std=c++17
-#
 #########
 
 echo "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
@@ -22,7 +21,7 @@ echo "RESULTS"
 # em++ LIB_CPP -o ../bin/lib_target.js
 
 ## convert wasm output to "human readable" wat
-# /home/heartbeast/projects/wasm/wabt/bin/wasm2wat lib_target.wasm -o lib_target.wat
+# /home/heartbeast/projects/wasm/wabt/bin/wasm2wat ./bin/lib_target.wasm -o ./bin/lib_target.wat
 
 ##################################################
 ################# output options #################

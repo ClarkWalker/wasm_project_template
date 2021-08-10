@@ -4,22 +4,24 @@
     "description": "create new WASM project",
     "dependencies": {
         "express": "^4.17.1",
+        "filewatcher": "^3.0.1",
         "nodemon": "^2.0.12"
     },
     "devDependencies": {},
     "scripts": {
         "start": "node server.js",
-        "dev": "./scripts/compile.sh && npm start",
+        "dev": "node scripts/compile.js && npm start",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "nodemonConfig": {
-        "ignore": "bin",
+        "ignore": [
+            "bin",
+            "scripts"
+        ],
         "watch": [
             ".",
             "app.html",
-            "src/lib.cpp",
-            "src/main.cpp",
-            "scripts/compile.sh"
+            "scripts/compile.js"
         ]
     },
     "author": "Clark Walker (heartbeast)",
