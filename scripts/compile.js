@@ -12,7 +12,10 @@ const LIB_WASM   = "./bin/lib_target.wasm";
 const LIB_WAT    = "./bin/lib_target.wat";
 
 const STD_COMPILE   = `g++ -std=gnu++17 ${MAIN_CPP} -o ${MAIN_OUT}`;
-const WASM_COMPILE  = `em++ ${LIB_CPP} -o ${LIB_JS}`;
+// const WASM_COMPILE  =
+//     `em++ ${LIB_CPP} -o ${LIB_JS}`;
+const WASM_COMPILE  = `em++ ${LIB_CPP} -o ${LIB_WASM} -s STANDALONE_WASM -Os`;
+
 const WASM_TO_WAT   = "/home/heartbeast/projects/wasm/wabt/bin/wasm2wat";
 const WAT_COMPILE   = `${WASM_TO_WAT} ${LIB_WASM}.wasm -o ${LIB_WAT}`;
 
