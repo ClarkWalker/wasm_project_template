@@ -1,4 +1,3 @@
-// console.log("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 console.log("\n\n\n\n\n\n");
 
 const exec = require("child_process").exec;
