@@ -10,17 +10,21 @@
     "devDependencies": {},
     "scripts": {
         "start": "node server.js",
-        "dev": "node scripts/compile.js && npm start",
+        "dev_old": "node scripts/compile.js && npm start",
+        "dev": "node scripts/compile.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "nodemonConfig": {
         "ignore": [
-            "bin",
-            "scripts"
+            "bin"
         ],
         "watch": [
             ".",
-            "app.html",
+            "index.html",
+            "scripts/compile.sh",
+            "scripts/compile.js",
+            "src/main.cpp",
+            "src/lib.cpp",
             "scripts/compile.js"
         ]
     },
