@@ -1311,7 +1311,7 @@ function initRuntime() {
   assert(!runtimeInitialized);
   runtimeInitialized = true;
 
-  
+
   callRuntimeCallbacks(__ATINIT__);
 }
 
@@ -1705,7 +1705,7 @@ var tempI64;
 // === Body ===
 
 var ASM_CONSTS = {
-  
+
 };
 
 
@@ -1800,7 +1800,7 @@ function intArrayToString(array) {
 
 
 var asmLibraryArg = {
-  
+
 };
 var asm = createWasm();
 /** @type {function(...*):?} */
@@ -2217,8 +2217,3 @@ if (Module['preInit']) {
 }
 
 run();
-
-
-
-
-
