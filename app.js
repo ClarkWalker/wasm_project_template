@@ -4,7 +4,7 @@ function js_nth_fibonacci(n) {
     return js_nth_fibonacci(n - 1) + js_nth_fibonacci(n - 2);
 }
 
-WebAssembly.instantiateStreaming(fetch("/lib_target.wasm")).then( response => {
+WebAssembly.instantiateStreaming(fetch("/bin/lib_target.wasm")).then( response => {
     console.log( response );
 
     console.log( "results of wasm functions below" )
