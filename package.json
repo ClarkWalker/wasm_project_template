@@ -21,6 +21,7 @@
         ],
         "watch": [
             ".",
+            "run.sh",
             "index.html",
             "scripts/compile.sh",
             "scripts/compile.js",
