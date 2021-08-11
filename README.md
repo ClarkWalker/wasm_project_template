@@ -14,7 +14,7 @@ Use the dev flag to run in development mode.  This will run the compiler.
 ## Troubleshooting
 
 ### Express server won't shut down
-Occasionally running a valid startup command such as `npm run start` or `node server.js` or ./run.sh results in a server that won't shut down this is accompanied by node crashing and showing the error `Error: listen EADDRINUSE: address already in use :::8000`.  The manual fix is shown below...
+Occasionally running a valid startup command such as `npm run start` or `node server.js` or `./run.sh` results in a server that won't shut down this is accompanied by node crashing and showing the error `Error: listen EADDRINUSE: address already in use :::8000`.  The manual fix is shown below...
 ```sh
 sudo lsof -i:8000
 ```
