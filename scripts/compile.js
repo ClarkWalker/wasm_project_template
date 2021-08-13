@@ -12,11 +12,15 @@ const LIB_WASM  = "./bin/lib_target.wasm";
 const LIB_WAT   = "./bin/lib_target.wat";
 
 const STD_COMPILE = `g++ -std=gnu++17 ${MAIN_CPP} -o ${MAIN_OUT}`;
-/////////////////////////////////
-// const WASM_COMPILE = `em++ ${LIB_CPP} -o ${LIB_JS}`;
 
-// const WASM_OPTIONS =
-    // "-s EXPORT_ALL=1 -s LINKABLE=1 -s STANDALONE_WASM -Os --no-entry"
+/////////////////////////////////
+
+/* // -- legacy commands but may still be useful 
+const WASM_COMPILE = `em++ ${LIB_CPP} -o ${LIB_JS}`;
+
+const WASM_OPTIONS =
+    "-s EXPORT_ALL=1 -s LINKABLE=1 -s STANDALONE_WASM -Os --no-entry"
+// */ // --
 
 const WASM_FUNCTIONS = [
     "my_add", "my_subtract", "nth_fibonacci"
@@ -108,10 +112,7 @@ watcher.add("./src/main.cpp");
 watcher.add("./");
 
 console.log("./scripts/compile.js: running");
-// watcher.on('prep', function(t) {
-//     console.log("THIS IS t: ", t)
-//     // start_server();
-// });
+start_server();
 
 watcher.on('change', function(file, stat) {
     if (file == "./src/main.cpp") {
@@ -120,11 +121,6 @@ watcher.on('change', function(file, stat) {
     else if (file == "./src/lib.cpp") {
         wasm_compile();
     }
-    else {
-        // start_server();
-    }
-
-    start_server();
 
     if (!stat) console.log('deleted');
 });
