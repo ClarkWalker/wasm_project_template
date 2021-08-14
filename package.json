@@ -23,8 +23,6 @@
             ".",
             "run.sh",
             "index.html",
-            "scripts/compile.sh",
-            "scripts/compile.js",
             "scripts/compile.js"
         ]
     },
