@@ -5,7 +5,7 @@ Easily start a new WASM project by cloning this repo
 
 ## Clone This Repo
 
-> #### Use **one** of the following commands to clone the repo
+#### Use **one** of the following commands to clone the repo
 Clone with http (if you don't have ssh set up)
 ```sh
 git clone git@github.com:redheartbeast/wasm_project_template.git
