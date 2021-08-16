@@ -36,7 +36,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ClarkWalker/wasm_project_template.git"
+        "url": "git+https://github.com/theheartbeast/wasm_project_template.git"
     },
     "keywords": [
         "wasm",
@@ -46,10 +46,10 @@
         "project",
         "template"
     ],
-    "author": "Clark Walker (h3artb3ast)",
+    "author": "Clark Walker (theheartbeast)",
     "license": "GPL-3.0",
     "bugs": {
-        "url": "https://github.com/ClarkWalker/wasm_project_template/issues"
+        "url": "https://github.com/theheartbeast/wasm_project_template/issues"
     },
-    "homepage": "https://github.com/ClarkWalker/wasm_project_template#readme"
+    "homepage": "https://github.com/theheartbeast/wasm_project_template#readme"
 }
