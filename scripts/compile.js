@@ -15,12 +15,13 @@ const STD_COMPILE = `g++ -std=gnu++17 ${MAIN_CPP} -o ${MAIN_OUT}`;
 
 /////////////////////////////////
 
-/* // -- legacy commands but may still be useful
+/* // -- legacy commands but may still be useful //////////////////////
 const WASM_COMPILE = `em++ ${LIB_CPP} -o ${LIB_JS}`;
 
 const WASM_OPTIONS =
-    "-s EXPORT_ALL=1 -s LINKABLE=1 -s STANDALONE_WASM -Os --no-entry"
-// */ // --
+  "-s EXPORT_ALL=1 -s LINKABLE=1 -s STANDALONE_WASM -Os --no-entry"
+
+// */ // -- ///////////////////////////////////////////////////////////
 
 const WASM_FUNCTIONS = [
   "my_add", "my_subtract", "nth_fibonacci"
