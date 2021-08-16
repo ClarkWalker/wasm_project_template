@@ -13,4 +13,4 @@ extern "C" {
         return nth_fibonacci( n - 1 ) + nth_fibonacci( n - 2 );
     }
 
-} // extern "C"
+}
