@@ -46,7 +46,7 @@ If you're contributing to this work\
 ## Installing
 
 ### Dependencies
-> You'll need to install emscripten separately if you haven't done so already
+> NOTE: You'll need to install emscripten separately if you haven't done so already.  [Click here](https://emscripten.org/docs/getting_started/index.html) to get started with emscripten. Once there click "Download and install" for installation instructions.
 
 #### npm dependencies
 > To install dependencies including development dependencies run
