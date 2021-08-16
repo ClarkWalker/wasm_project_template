@@ -71,4 +71,4 @@ To start the app in development mode.
 ```sh
 ./run.sh dev
 ```
-- This will run the compiler when you change the cpp file contents.
+* This will run the compiler when you change the cpp file contents.
