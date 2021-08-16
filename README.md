@@ -15,12 +15,15 @@ Clone with ssh (if you have ssh set up)
 git clone git@github.com:redheartbeast/wasm_project_template.git
 ```
 
+-------------------------------------------------------------------------------
+
 ### (Optional) change the name of your project folder.
 ```sh
 mv wasm_project_template new_project_name
 ```
 * replacing `new_project_name` with whatever you want to change the name of your project too, i.e. `my_fancy_lil_project`
 
+-------------------------------------------------------------------------------
 
 ### Move to the newly cloned project directory.
 ```sh
@@ -28,18 +31,19 @@ cd wasm_project_template
 ```
 * replacing `wasm_project_template` with whatever you changed the name of your project too, i.e. `new_project_name`
 
+-------------------------------------------------------------------------------
+
 ### Are you starting a new project or contributing to this template?
-If you want to start a new project run\
-1)
+If you want to start a new project run
 ```sh
 rm -rf .git
 git init
 ```
-2) set up your git repo in github as you normally would :)\
-\
-If you're contributing to this work\
-1) **Thank you :D**\
-2) you don't need to do anything else, just move onto the next step :)
+* then set up your git repo in github as you normally would :)
+
+If you're contributing to this work
+* **Thank you :D**
+* you don't need to do anything else, just move onto the next step :)
 
 -------------------------------------------------------------------------------
 
@@ -47,6 +51,8 @@ If you're contributing to this work\
 
 ### Dependencies
 NOTE: You'll need to install emscripten separately if you haven't done so already.  [**Click here to get started with emscripten.**](https://emscripten.org/docs/getting_started/index.html)  Once there click **"Download and install"** for installation instructions.
+
+-------------------------------------------------------------------------------
 
 ### npm dependencies
 To install dependencies including development dependencies run
@@ -59,6 +65,8 @@ To install only production dependencies run
 ```
 * this can be a useful starting place for a full install script once you deploy to your users
 * If you have any trouble with node_modules you can reinstall node_modules with the same commands.
+
+-------------------------------------------------------------------------------
 
 ## Running and developing
 
