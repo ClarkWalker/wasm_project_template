@@ -58,8 +58,7 @@ To install only production dependencies run
 ./run_install.sh
 ```
 * this can be a useful starting place for a full install script once you deploy to your users
-
-If you have any trouble with node_modules you can reinstall node_modules with the same commands.
+* If you have any trouble with node_modules you can reinstall node_modules with the same commands.
 
 ## Running and developing
 
