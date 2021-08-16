@@ -7,7 +7,10 @@
         "filewatcher": "^3.0.1",
         "nodemon": "^2.0.12"
     },
-    "devDependencies": {},
+    "devDependencies": {
+        "chai": "^4.3.4",
+        "mocha": "^9.0.3"
+    },
     "scripts": {
         "start": "node server.js",
         "dev": "node scripts/compile.js && npm test",
@@ -23,8 +26,6 @@
             ".",
             "run.sh",
             "index.html",
-            "scripts/compile.sh",
-            "scripts/compile.js",
             "scripts/compile.js"
         ]
     },
