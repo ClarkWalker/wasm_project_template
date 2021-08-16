@@ -2,6 +2,11 @@
     "name": "wasm_project_template",
     "version": "1.0.0",
     "description": "create new WASM project",
+    "main": "app.js",
+    "directories": {
+        "doc": "docs",
+        "test": "test"
+    },
     "dependencies": {
         "express": "^4.17.1",
         "filewatcher": "^3.0.1",
@@ -12,9 +17,9 @@
         "mocha": "^9.0.3"
     },
     "scripts": {
+        "test": "mocha --reporter spec",
         "start": "node server.js",
-        "dev": "node scripts/compile.js && npm test",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "dev": "node scripts/compile.js && npm test"
     },
     "nodemonConfig": {
         "ignore": [
@@ -29,6 +34,22 @@
             "scripts/compile.js"
         ]
     },
-    "author": "Clark Walker (heartbeast)",
-    "license": "GPL-3.0"
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ClarkWalker/wasm_project_template.git"
+    },
+    "keywords": [
+        "wasm",
+        "js",
+        "cpp",
+        "c++",
+        "project",
+        "template"
+    ],
+    "author": "Clark Walker (h3artb3ast)",
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/ClarkWalker/wasm_project_template/issues"
+    },
+    "homepage": "https://github.com/ClarkWalker/wasm_project_template#readme"
 }
