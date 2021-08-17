@@ -72,10 +72,10 @@ To install only production dependencies run
 
 To start the app run the following in bash
 ```sh
-./run.sh
+./run
 ```
 To start the app in development mode.
 ```sh
-./run.sh dev
+./run dev
 ```
 * This will run the compiler when you change the cpp file contents.
