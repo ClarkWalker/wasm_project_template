@@ -58,7 +58,10 @@ const error_pad = function (error, stdErr, title="") {
 }
 
 
-const bash_exec = function (title, command, callback=null, cb_args=[]) {
+const bash_exec = function (title, command=false, callback=null, cb_args=[]) {
+  if (! command) {
+    command = title;
+  }
   console.log(title);
   exec(command, function (error, stdOut, stdErr) {
     if (error || stdErr) {
@@ -77,6 +80,7 @@ const start_server = function (verbose=false) {
   if (verbose) {
     console.log("restarting server");
   }
+  bash_exec("npm run test");
   return server;
 }
 
@@ -94,16 +98,23 @@ start_server();
 watcher.on('change', function(file, stat) {
   if (file == "./src/main.cpp") {
     bash_exec("STD_COMPILE", STD_COMPILE,
-      bash_exec, ["MAIN_OUT", MAIN_OUT, start_server]
+      bash_exec, ["MAIN_OUT", MAIN_OUT,
+        bash_exec, ["npm run test", "", start_server]
+      ]
     );
   } else if (file == "./src/lib.cpp") {
     console.log(`compiling using: $ ${WASM_COMPILE}`);
     bash_exec("WASM_COMPILE", WASM_COMPILE,
       bash_exec, ["STD_COMPILE", STD_COMPILE,
-        bash_exec, ["MAIN_OUT", MAIN_OUT, start_server]
+        bash_exec, ["MAIN_OUT", MAIN_OUT,
+          bash_exec, ["npm run test", "", start_server]
+        ]
       ]
     );
+  } else {
+    // bash_exec("npm run test");
   }
+
   if (!stat) console.log('deleted');
 });
 
