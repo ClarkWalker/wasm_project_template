@@ -1,4 +1,3 @@
-console.log("\n\n\n\n\n\n");
 // const server = require('../server.js');
 
 const exec = require("child_process").exec;
@@ -33,9 +32,6 @@ const WASM_OPTIONS =
 const WASM_COMPILE =
   `em++ --no-entry ${MAIN_CPP} -o ${LIB_WASM} ${WASM_OPTIONS}`;
 
-console.log("\ncompiling using:");
-console.log(WASM_COMPILE);
-console.log("\n");
 /////////////////////////////////
 
 // const watcher = filewatcher({persistent: false});
@@ -62,7 +58,10 @@ const error_pad = function (error, stdErr, title="") {
 }
 
 
-const bash_exec = function (title, command, callback=null, cb_args=[]) {
+const bash_exec = function (title, command=false, callback=null, cb_args=[]) {
+  if (! command) {
+    command = title;
+  }
   console.log(title);
   exec(command, function (error, stdOut, stdErr) {
     if (error || stdErr) {
@@ -76,9 +75,12 @@ const bash_exec = function (title, command, callback=null, cb_args=[]) {
 }
 
 
-const start_server = function () {
+const start_server = function (verbose=false) {
   const server = require('../server.js');
-  console.log("restarting server");
+  if (verbose) {
+    console.log("restarting server");
+  }
+  bash_exec("npm run test");
   return server;
 }
 
@@ -90,21 +92,29 @@ watcher.add("./src/lib.cpp");
 watcher.add("./src/main.cpp");
 watcher.add("./");
 
-console.log("./scripts/compile.js: running");
+// console.log("./scripts/compile.js: running");
 start_server();
 
 watcher.on('change', function(file, stat) {
   if (file == "./src/main.cpp") {
     bash_exec("STD_COMPILE", STD_COMPILE,
-      bash_exec, ["MAIN_OUT", MAIN_OUT, start_server]
-    );
-  } else if (file == "./src/lib.cpp") {
-    bash_exec("WASM_COMPILE", WASM_COMPILE,
-      bash_exec, ["STD_COMPILE", STD_COMPILE,
-        bash_exec, ["MAIN_OUT", MAIN_OUT, start_server]
+      bash_exec, ["MAIN_OUT", MAIN_OUT,
+        bash_exec, ["npm run test", "", start_server]
       ]
     );
+  } else if (file == "./src/lib.cpp") {
+    console.log(`compiling using: $ ${WASM_COMPILE}`);
+    bash_exec("WASM_COMPILE", WASM_COMPILE,
+      bash_exec, ["STD_COMPILE", STD_COMPILE,
+        bash_exec, ["MAIN_OUT", MAIN_OUT,
+          bash_exec, ["npm run test", "", start_server]
+        ]
+      ]
+    );
+  } else {
+    // bash_exec("npm run test");
   }
+
   if (!stat) console.log('deleted');
 });
 
