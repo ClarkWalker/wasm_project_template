@@ -46,39 +46,26 @@ const wasm_compile =
 // const watcher = filewatcher({persistent: false});
 const watcher = filewatcher();
 
-// const error_pad = function (error, stdErr, title="") {
-//     console.log("\n\n\n\n\n\n\n\n\n\n\n");
-//     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-//     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-//     console.log(`error from ${title}:`);
-//     console.log("\n");
-//     console.log(error);
-//     console.log("\n");
-//     console.log("____________________________________________________");
-//     console.log("————————————————————————————————————————————————————");
-//     console.log("————————————————————————————————————————————————————");
-//     console.log("____________________________________________________");
-//     console.log(`stdErr from ${title}:`);
-//     console.log("\n");
-//     console.log(stdErr);
-//     console.log("\n");
-//     console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-//     console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-// }
-
-
-const error_pad = function (err, title="") {
+const error_pad = function (err, title="", standard_error=true) {
+    if (standard_error) {
+        standard_error = "standard ";
+    } else {
+        standard_error = "non standard ";
+    }
+    const padding = 0;
+    const width = process.stdout.columns - (padding * 2);
     const message = `\
-____________________________________________________
-————————————————————————————————————————————————————
-————————————————————————————————————————————————————
-____________________________________________________
-error from (${title}):
+    ${standard_error}error from (${title}):
+${" ".repeat(padding)}${"_".repeat(width)}
+${" ".repeat(padding)}${"—".repeat(width)}
+${" ".repeat(padding)}${"—".repeat(width)}
+${" ".repeat(padding)}${"_".repeat(width)}
+
 ${err}
-————————————————————————————————————————————————————
-____________________________________________________
-____________________________________________________
-————————————————————————————————————————————————————`
+${" ".repeat(padding)}${"—".repeat(width)}
+${" ".repeat(padding)}${"_".repeat(width)}
+${" ".repeat(padding)}${"_".repeat(width)}
+${" ".repeat(padding)}${"—".repeat(width)}`;
     console.error(message);
 }
 
@@ -90,7 +77,7 @@ const bash_exec = function (title, command=false, callback=null, cb_args=[]) {
     console.log(`${title}:`);
     exec(command, function (error, stdOut, stdErr) {
         if (error) {
-            error_pad(error, title);
+            error_pad(error, title, false);
         }
         if (stdErr) {
             error_pad(stdErr, title);
