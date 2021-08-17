@@ -3,85 +3,112 @@
 const exec = require("child_process").exec;
 const filewatcher = require('filewatcher');
 
-const MAIN_CPP  = "./src/main.cpp";
-const LIB_CPP   = "./src/lib.cpp";
+const main_cpp  = "./src/main.cpp";
+const lib_cpp   = "./src/lib.cpp";
 
-const MAIN_OUT  = "./bin/main_target.out";
-const LIB_JS    = "./bin/lib_target.js";
-const LIB_WASM  = "./bin/lib_target.wasm";
+const main_out  = "./bin/main_target.out";
+const lib_js    = "./bin/lib_target.js";
+const lib_wasm  = "./bin/lib_target.wasm";
 
-const STD_COMPILE = `g++ -std=gnu++17 ${MAIN_CPP} -o ${MAIN_OUT}`;
+const std_compile = `g++ -std=gnu++17 ${main_cpp} -o ${main_out}`;
 
 /////////////////////////////////
 
 /* // -- legacy commands but may still be useful //////////////////////
-const WASM_COMPILE = `em++ ${LIB_CPP} -o ${LIB_JS}`;
 
-const WASM_OPTIONS =
-  "-s EXPORT_ALL=1 -s LINKABLE=1 -s STANDALONE_WASM -Os --no-entry"
+const wasm_compile = `em++ ${lib_cpp} -o ${lib_js}`;
+
+const wasm_options =
+"-s EXPORT_ALL=1 -s LINKABLE=1 -s STANDALONE_WASM -Os --no-entry"
 
 // */ // -- ///////////////////////////////////////////////////////////
 
-const WASM_FUNCTIONS = [
-  "my_add", "my_subtract", "nth_fibonacci"
+const cpp_functions = [
+    "my_add", "my_subtract", "nth_fibonacci", "reverse_array"
 ].join("', '_");
 
-const WASM_OPTIONS =
-  `-s EXPORTED_FUNCTIONS="[${"'_" + WASM_FUNCTIONS + "'"}]" -s STANDALONE_WASM --no-entry -Os`;
+// /* // un/comment to switch between exported_functions ///////////
+const exported_functions =
+    `-s EXPORTED_FUNCTIONS="[${"'_" + cpp_functions + "'"}]"`; /*/
+const exported_functions = ""; // *////////////////////////////////
 
-const WASM_COMPILE =
-  `em++ --no-entry ${MAIN_CPP} -o ${LIB_WASM} ${WASM_OPTIONS}`;
+// /* // un/comment to switch between wasm_options ///////////
+const wasm_options =
+    `${exported_functions} -s STANDALONE_WASM --no-entry -Os`; /*/
+const wasm_options =
+    `${exported_functions} -s STANDALONE_WASM --no-entry -Os -s LINKABLE=1 -s EXPORT_ALL=1`; // *///////////////////////////////////////
+
+const wasm_compile =
+    `em++ --no-entry ${main_cpp} -o ${lib_wasm} ${wasm_options}`;
 
 /////////////////////////////////
 
 // const watcher = filewatcher({persistent: false});
 const watcher = filewatcher();
 
-const error_pad = function (error, stdErr, title="") {
-  console.log("\n\n\n\n\n\n\n\n\n\n\n");
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-  console.log(`error from ${title}:`);
-  console.log("\n");
-  console.log(error);
-  console.log("\n");
-  console.log("____________________________________________________");
-  console.log("————————————————————————————————————————————————————");
-  console.log("————————————————————————————————————————————————————");
-  console.log("____________________________________________________");
-  console.log(`stdErr from ${title}:`);
-  console.log("\n");
-  console.log(stdErr);
-  console.log("\n");
-  console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-  console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+// const error_pad = function (error, stdErr, title="") {
+//     console.log("\n\n\n\n\n\n\n\n\n\n\n");
+//     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//     console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//     console.log(`error from ${title}:`);
+//     console.log("\n");
+//     console.log(error);
+//     console.log("\n");
+//     console.log("____________________________________________________");
+//     console.log("————————————————————————————————————————————————————");
+//     console.log("————————————————————————————————————————————————————");
+//     console.log("____________________________________________________");
+//     console.log(`stdErr from ${title}:`);
+//     console.log("\n");
+//     console.log(stdErr);
+//     console.log("\n");
+//     console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+//     console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+// }
+
+
+const error_pad = function (err, title="") {
+    const message = `\
+____________________________________________________
+————————————————————————————————————————————————————
+————————————————————————————————————————————————————
+____________________________________________________
+error from (${title}):
+${err}
+————————————————————————————————————————————————————
+____________________________________________________
+____________________________________________________
+————————————————————————————————————————————————————`
+    console.error(message);
 }
 
 
 const bash_exec = function (title, command=false, callback=null, cb_args=[]) {
-  if (! command) {
-    command = title;
-  }
-  console.log(title);
-  exec(command, function (error, stdOut, stdErr) {
-    if (error || stdErr) {
-      error_pad(error, stdErr, title);
+    if (! command) {
+        command = title;
     }
-    console.log(stdOut);
-    if (typeof(callback) == "function") {
-      callback(...cb_args);
-    }
-  });
+    console.log(`${title}:`);
+    exec(command, function (error, stdOut, stdErr) {
+        if (error) {
+            error_pad(error, title);
+        }
+        if (stdErr) {
+            error_pad(stdErr, title);
+        }
+        console.log(stdOut);
+        if (typeof(callback) == "function") {
+            callback(...cb_args);
+        }
+    });
 }
 
 
 const start_server = function (verbose=false) {
-  const server = require('../server.js');
-  if (verbose) {
-    console.log("restarting server");
-  }
-  bash_exec("npm run test");
-  return server;
+    const server = require('../server.js');
+    if (verbose) {
+        console.log("restarting server");
+    }
+    return server;
 }
 
 
@@ -94,28 +121,33 @@ watcher.add("./");
 
 // console.log("./scripts/compile.js: running");
 start_server();
+bash_exec("npm run test");
+
 
 watcher.on('change', function(file, stat) {
-  if (file == "./src/main.cpp") {
-    bash_exec("STD_COMPILE", STD_COMPILE,
-      bash_exec, ["MAIN_OUT", MAIN_OUT,
-        bash_exec, ["npm run test", "", start_server]
-      ]
-    );
-  } else if (file == "./src/lib.cpp") {
-    console.log(`compiling using: $ ${WASM_COMPILE}`);
-    bash_exec("WASM_COMPILE", WASM_COMPILE,
-      bash_exec, ["STD_COMPILE", STD_COMPILE,
-        bash_exec, ["MAIN_OUT", MAIN_OUT,
-          bash_exec, ["npm run test", "", start_server]
-        ]
-      ]
-    );
-  } else {
-    // bash_exec("npm run test");
-  }
+    if (file == "./src/main.cpp") {
+        console.log("\n\n\n\n\n\n\n\n\n\n\n");
+        console.log(`compiling using: $ ${std_compile}\n`);
+        bash_exec("std_compile", std_compile,
+            bash_exec, ["main_out", main_out,
+                bash_exec, ["npm run test", "", start_server]
+            ]
+        );
+    } else if (file == "./src/lib.cpp") {
+        console.log("\n\n\n\n\n\n\n\n\n\n\n");
+        console.log(`compiling using: $ ${wasm_compile}\n`);
+        bash_exec("wasm_compile", wasm_compile,
+            bash_exec, ["std_compile", std_compile,
+                bash_exec, ["main_out", main_out,
+                    bash_exec, ["npm run test", "", start_server]
+                ]
+            ]
+        );
+    } else {
+        // bash_exec("npm run test");
+    }
 
-  if (!stat) console.log('deleted');
+    if (!stat) console.log('deleted');
 });
 
 console.log("./scripts/compile.js: monitoring for file changes");
