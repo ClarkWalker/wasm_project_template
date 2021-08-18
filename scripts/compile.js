@@ -52,7 +52,7 @@ const error_pad = function (err, title="", standard_error=true) {
     } else {
         standard_error = "non standard ";
     }
-    const padding = 0;
+    const padding = 1;
     const width = process.stdout.columns - (padding * 2);
     const message = `\
     ${standard_error}error from (${title}):
