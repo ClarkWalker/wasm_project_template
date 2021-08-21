@@ -9,13 +9,13 @@
     },
     "dependencies": {
         "express": "^4.17.1",
-        "nodemon": "^2.0.12",
     },
     "devDependencies": {
+        "nodemon": "^2.0.12",
         "filewatcher": "^3.0.1",
-        "wat-wasm": "^1.0.37"
         "chai": "^4.3.4",
         "mocha": "^9.0.3"
+        "wat-wasm": "^1.0.37"
     },
     "scripts": {
         "test": "./node_modules/mocha/bin/mocha",
