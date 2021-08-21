@@ -9,10 +9,11 @@ const lib_cpp   = "./src/lib.cpp";
 const main_out  = "./bin/main_target.out";
 const lib_js    = "./bin/lib_target.js";
 const lib_wasm  = "./bin/lib_target.wasm";
-
-const std_compile = `g++ -std=gnu++17 ${main_cpp} -o ${main_out}`;
+const lib_wat  = "./bin/lib_target.wat";
 
 /////////////////////////////////
+
+const std_compile = `g++ -std=gnu++17 ${main_cpp} -o ${main_out}`;
 
 /* // -- legacy commands but may still be useful //////////////////////
 
@@ -22,6 +23,7 @@ const wasm_options =
 "-s EXPORT_ALL=1 -s LINKABLE=1 -s STANDALONE_WASM -Os --no-entry"
 
 // */ // -- ///////////////////////////////////////////////////////////
+const wasm2wat = `./node_modules/wat-wasm/bin/wasm2wat ${lib_wasm} -o ${lib_wat}`
 
 const cpp_functions = [
     "my_add", "my_subtract", "nth_fibonacci", "reverse_array"
@@ -126,7 +128,9 @@ watcher.on('change', function(file, stat) {
         bash_exec("wasm_compile", wasm_compile,
             bash_exec, ["std_compile", std_compile,
                 bash_exec, ["main_out", main_out,
-                    bash_exec, ["npm run test", "", start_server]
+                    bash_exec, ["npm run test", "",
+                        bash_exec, [wasm2wat, "", start_server
+                    ]
                 ]
             ]
         );

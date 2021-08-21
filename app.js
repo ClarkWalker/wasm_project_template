@@ -1,6 +1,10 @@
 // /* ///////////////////////////////////////////////////
 
-let memory = new WebAssembly.Memory({initial: 128, maximum: 128});
+let memory = new WebAssembly.Memory({
+    initial: 128,
+    maximum: 128
+});
+
 // memory.grow(10); // works fine
 // memory.grow(11); // throws an error
 let arr = new Uint32Array(memory.buffer);
