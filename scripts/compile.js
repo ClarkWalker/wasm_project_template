@@ -1,53 +1,48 @@
-// const server = require('../server.js');
 
+// imports
 const exec = require("child_process").exec;
 const filewatcher = require('filewatcher');
+const watcher = filewatcher();
 
+// file locations
 const main_cpp  = "./src/main.cpp";
 const lib_cpp   = "./src/lib.cpp";
 
 const main_out  = "./bin/main_target.out";
 const lib_js    = "./bin/lib_target.js";
 const lib_wasm  = "./bin/lib_target.wasm";
-const lib_wat  = "./bin/lib_target.wat";
+const lib_wat   = "./bin/lib_target.wat";
 
-/////////////////////////////////
+// cpp exported functions list
+const exported_functions = `-s EXPORTED_FUNCTIONS="[${"'_" + [
+    "my_add",
+    "my_subtract",
+    "nth_fibonacci",
+    "reverse_array"
+].join("', '_") + "'"}]"`;
+
+// compiler commands
+const wasm_compile = [
+    "em++",
+    "--no-entry",
+    main_cpp,
+    // lib_cpp,
+    `-o ${lib_wasm}`,
+    // /*///////////////////////////
+        exported_functions,
+        /*/
+        "-s LINKABLE=1 -s EXPORT_ALL=1",
+    // *////////////////////////////
+    "-s STANDALONE_WASM",
+    "-Os"
+].join(" ")
+
+const wasm2wat = `./node_modules/wat-wasm/bin/wasm2wat ${lib_wasm} -o ${lib_wat}`
 
 const std_compile = `g++ -std=gnu++17 ${main_cpp} -o ${main_out}`;
 
-/* // -- legacy commands but may still be useful //////////////////////
-
-const wasm_compile = `em++ ${lib_cpp} -o ${lib_js}`;
-
-const wasm_options =
-"-s EXPORT_ALL=1 -s LINKABLE=1 -s STANDALONE_WASM -Os --no-entry"
-
-// */ // -- ///////////////////////////////////////////////////////////
-const wasm2wat = `./node_modules/wat-wasm/bin/wasm2wat ${lib_wasm} -o ${lib_wat}`
-
-const cpp_functions = [
-    "my_add", "my_subtract", "nth_fibonacci", "reverse_array"
-].join("', '_");
-
-// /* // un/comment to switch between exported_functions ///////////
-const exported_functions =
-    `-s EXPORTED_FUNCTIONS="[${"'_" + cpp_functions + "'"}]"`; /*/
-const exported_functions = ""; // *////////////////////////////////
-
-// /* // un/comment to switch between wasm_options ///////////
-const wasm_options =
-    `${exported_functions} -s STANDALONE_WASM --no-entry -Os`; /*/
-const wasm_options =
-    `${exported_functions} -s STANDALONE_WASM --no-entry -Os -s LINKABLE=1 -s EXPORT_ALL=1`; // *///////////////////////////////////////
-
-const wasm_compile =
-    `em++ --no-entry ${main_cpp} -o ${lib_wasm} ${wasm_options}`;
-
-/////////////////////////////////
-
-// const watcher = filewatcher({persistent: false});
-const watcher = filewatcher();
-
+////////////////////////////////////////////////////////////
+// definitions
 const error_pad = function (err, title="", standard_error=true) {
     if (standard_error) {
         standard_error = "standard ";
@@ -100,8 +95,8 @@ const start_server = function (verbose=true) {
     return server;
 }
 
-
 ////////////////////////////////////////////////////////////
+// implementations
 
 // watch a file
 watcher.add("./src/lib.cpp");

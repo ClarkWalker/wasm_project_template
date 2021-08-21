@@ -5,8 +5,7 @@ let memory = new WebAssembly.Memory({
     maximum: 128
 });
 
-// memory.grow(10); // works fine
-// memory.grow(11); // throws an error
+// memory.grow(10); // grows memory by 10 64 KB pages, thorws error if over max
 let arr = new Uint32Array(memory.buffer);
 
 const importObject = {
