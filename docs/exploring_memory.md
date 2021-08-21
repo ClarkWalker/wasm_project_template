@@ -1,6 +1,6 @@
 # Exploring the "Memory" object in WASM
 
-In WASM "memory" is represented as a contiguous range of untyped bytes
+In WASM, "memory" is represented as a contiguous range of untyped bytes
     this is called linear memory
 
 Linear memory is organized in pages
@@ -13,7 +13,7 @@ where each page is 64KB
 
 * bytes (*pages?) are addressed starting from the offset 0
 
-* memory constraints can be specified by a developer by setting a minimum and or a maximum memory size in units of pages.
+* memory constraints can be specified by the developer by setting a minimum and or a maximum memory size in units of pages.
 
 * memory can be grown in units of pages as the program runs, up until the maximum if a maximum number of pages is specified.
     * since memory is contiguous when growing memory it is possible that the new required memory will exceed the bounds of the available memory (not exceeding the maximum specified memory).  
