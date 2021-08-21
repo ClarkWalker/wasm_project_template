@@ -92,7 +92,7 @@ const bash_exec = function (title, command=false, callback=null, cb_args=[]) {
 }
 
 
-const start_server = function (verbose=false) {
+const start_server = function (verbose=true) {
     const server = require('../server.js');
     if (verbose) {
         console.log("restarting server");
@@ -112,7 +112,6 @@ watcher.add("./");
 start_server();
 bash_exec("npm run test");
 
-
 watcher.on('change', function(file, stat) {
     if (file == "./src/main.cpp") {
         console.log("\n\n\n\n\n\n\n\n\n\n\n");
@@ -128,8 +127,8 @@ watcher.on('change', function(file, stat) {
         bash_exec("wasm_compile", wasm_compile,
             bash_exec, ["std_compile", std_compile,
                 bash_exec, ["main_out", main_out,
-                    bash_exec, ["npm run test", "",
-                        bash_exec, [wasm2wat, "", start_server
+                    bash_exec, ["wasm2wat", wasm2wat,
+                        bash_exec, ["npm run test", "", start_server]
                     ]
                 ]
             ]
