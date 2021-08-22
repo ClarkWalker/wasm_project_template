@@ -1,4 +1,3 @@
-
 // imports
 const exec = require("child_process").exec;
 const filewatcher = require('filewatcher');
