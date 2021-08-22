@@ -30,7 +30,8 @@
         ],
         "watch": [
             ".",
-            "run.sh",
+            "app_run.sh",
+            "app_install.sh",
             "index.html",
             "scripts/compile.js"
         ]
