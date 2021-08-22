@@ -4,7 +4,7 @@ const table = new WebAssembly.Table({
 });
 
 WebAssembly.instantiateStreaming(
-    fetch("/bin/lib_target.wasm"), table)
+    fetch("/bin/lib_target.wasm"))
 .then((result) => {
     console.log(result);
     table.set(0, result.instance.exports.nth_fibonacci);
