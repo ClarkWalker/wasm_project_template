@@ -88,7 +88,7 @@ const bash_exec = function (title, command=false, callback=null, cb_args=[]) {
 
 
 const start_server = function (verbose=true) {
-    const server = require('../server.js');
+    const server = require('../app.js');
     if (verbose) {
         console.log("restarting server");
     }
