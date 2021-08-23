@@ -7,8 +7,9 @@ const js_nth_fibonacci = function (n) {
 }
 
 WebAssembly.instantiateStreaming(
-    fetch("/bin/lib_target.wasm"), {})
-.then( response => {
+    fetch("/bin/lib_target.wasm"),
+    {}
+).then( response => {
     console.log( response );
     console.log( "results of wasm functions below" );
     console.log( "30 + 12 : ", response.instance.exports.my_add(30, 12) );
