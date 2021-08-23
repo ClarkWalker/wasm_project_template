@@ -4,13 +4,13 @@ const filewatcher = require('filewatcher');
 const watcher = filewatcher();
 
 // file locations
-const main_cpp  = "./src/main.cpp";
-const lib_cpp   = "./src/lib.cpp";
+const main_cpp  = "src/main.cpp";
+const lib_cpp   = "src/lib.cpp";
 
-const main_out  = "./bin/main_target.out";
-const lib_js    = "./bin/lib_target.js";
-const lib_wasm  = "./bin/lib_target.wasm";
-const lib_wat   = "./bin/lib_target.wat";
+const main_out  = "bin/main_target.out";
+const lib_js    = "bin/lib_target.js";
+const lib_wasm  = "bin/lib_target.wasm";
+const lib_wat   = "bin/lib_target.wat";
 
 // cpp exported functions list
 const exported_functions = `-s EXPORTED_FUNCTIONS="[${"'_" + [
